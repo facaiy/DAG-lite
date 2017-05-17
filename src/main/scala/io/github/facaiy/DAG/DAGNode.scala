@@ -1,6 +1,6 @@
 package io.github.facaiy.DAG
 
-import io.github.facaiy.DAG.LazyCell._
+import io.github.facaiy.DAG.LazyCell.{lazyCell, sequence}
 
 /**
  * Created by facai on 5/10/17.
@@ -33,8 +33,8 @@ case class InputNode[K, V](override val name: K,
                            transFunc: () => V) extends DAGNode[K, V]
 
 private case class InternalNode[K, V](override val name: K,
-                              depends: Seq[K],
-                              reduceFunc: Seq[V] => V) extends DAGNode[K, V]
+                                      depends: Seq[K],
+                                      reduceFunc: Seq[V] => V) extends DAGNode[K, V]
 
 object ProcessNode {
   def apply[K, V](name: K, depends: Seq[K], reduceFunc: Seq[V] => V): DAGNode[K, V] =
