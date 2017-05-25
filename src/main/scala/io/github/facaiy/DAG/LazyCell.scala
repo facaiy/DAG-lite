@@ -24,4 +24,28 @@ object LazyCell {
   }
 
   def sequence[A](as: Seq[LazyCell[A]]): LazyCell[Seq[A]] = lazyCell(as.map(_.getValue()))
+
+  def sequencePar[A](as: Seq[LazyCell[A]]): LazyCell[Seq[A]] = {
+    // lazyCell(as.par.map(_.getValue()).seq)
+    Test.lazyCell(test(as))
+  }
+
+  def test[A](as: Seq[LazyCell[A]]): Seq[A] = {
+    import scala.concurrent._
+    import scala.concurrent.ExecutionContext.Implicits.global
+    import scala.concurrent.duration._
+
+    // import java.util.concurrent.Executors
+    // implicit val ec = ExecutionContext.fromExecutor(Executors.newFixedThreadPool(20))
+
+    val res: Future[Seq[A]] = Future.sequence(as.map(x => Future(blocking(x.getValue()))))
+      Await.result(res, 12 seconds)
+  }
+}
+
+object Test {
+  def lazyCell[A](f: => A): LazyCell[A] = {
+    lazy val value = f
+    LazyCell(() => value)
+  }
 }
