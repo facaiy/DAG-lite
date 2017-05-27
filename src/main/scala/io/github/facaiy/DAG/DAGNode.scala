@@ -1,5 +1,8 @@
 package io.github.facaiy.DAG
 
+import scala.concurrent.{Await, Future}
+import scala.concurrent.ExecutionContext.Implicits.global
+
 import io.github.facaiy.DAG.LazyCell.{lazyCell, sequence}
 
 /**
@@ -25,6 +28,27 @@ object DAGNode {
       }
 
     nodesMap.getValue()
+  }
+
+  def toFutureNetWork[K, V](nodes: Seq[DAGNode[K, V]]): Map[K, LazyCell[Future[V]]] = {
+    def toFutureCell(n: DAGNode[K, V]): DAGNode[K, Future[V]] =
+      n match {
+        case InputNode(k, f) =>
+          // TODO(facai), 用andThen或者compose精简
+          val g = () => Future(f())
+          InputNode(k, g)
+        case InternalNode(k, ds, f) =>
+          val g = (xs: Seq[Future[V]]) => Future.sequence(xs).map(f)
+          InternalNode(k, ds, g)
+      }
+
+    toLazyNetWork(nodes.map(toFutureCell))
+  }
+
+  case class LazyFuture[A](l: LazyCell[Future[A]]) {
+    import scala.concurrent.duration._
+
+    def getFuture[A](timeOut: Int): A = Await.result(l.getValue(), timeOut.seconds)
   }
 }
 
