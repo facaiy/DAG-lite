@@ -17,7 +17,11 @@ features:
    </dependency>
    ```
 
-2. sbt: todo.
+2. sbt:
+   The configuration should be right, while it need to be verified.
+   ```
+   "io.github.facaiy" %% "DAG-lite" % "0.1.0"
+   ```
 
 
 ### Usage
