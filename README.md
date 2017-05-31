@@ -5,6 +5,23 @@ features:
 + lazy evaluation.
 + concurrent computing.
 
+
+### Install
+
+1. maven
+   ```
+   <dependency>
+     <groupId>io.github.facaiy</groupId>
+     <artifactId>DAG-lite</artifactId>
+     <version>0.1.0</version>
+   </dependency>
+   ```
+
+2. sbt: todo.
+
+
+### Usage
+
 1. A simple example:
    ```scala
      def read[A](): A
