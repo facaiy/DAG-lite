@@ -29,7 +29,7 @@
 
     <scm>
         <connection>scm:git:git@github.com:facaiy/DAG-lite.git</connection>
-        <developerConnection>scm:git:ssh://github.com:facaiy/DAG-lite.git</developerConnection>
+        <developerConnection>scm:git:git@github.com:facaiy/DAG-lite.git</developerConnection>
         <url>http://github.com/facaiy/DAG-lite/tree/master</url>
     </scm>
 
