@@ -1,5 +1,9 @@
 package io.github.facaiy.DAG
 
+import scala.concurrent.Future
+
+import io.github.facaiy.DAG.DAGNode.LazyFuture
+
 /**
  * Created by facai on 5/5/17.
  */
@@ -24,4 +28,6 @@ object LazyCell {
   }
 
   def sequence[A](as: Seq[LazyCell[A]]): LazyCell[Seq[A]] = lazyCell(as.map(_.getValue()))
+
+  implicit def asLazyFuture[A](l: LazyCell[Future[A]]): LazyFuture[A] = LazyFuture(l)
 }
