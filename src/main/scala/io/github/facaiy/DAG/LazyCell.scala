@@ -1,6 +1,7 @@
 package io.github.facaiy.DAG
 
 import scala.concurrent.Future
+import scala.language.implicitConversions
 
 import io.github.facaiy.DAG.DAGNode.LazyFuture
 
