@@ -34,7 +34,7 @@ object DAGNode {
     def toFutureCell(n: DAGNode[K, V]): DAGNode[K, Future[V]] =
       n match {
         case InputNode(k, f) =>
-          // TODO(facai), 用andThen或者compose精简
+          // TODO(facai), use `compose` to combine `f` and `Future.apply`
           val g = () => Future(f())
           InputNode(k, g)
         case InternalNode(k, ds, f) =>
