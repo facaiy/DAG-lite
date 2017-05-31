@@ -1,8 +1,8 @@
 package io.github.facaiy.DAG
 
-import io.github.facaiy.DAG.DAGNode.LazyFuture
-
 import scala.concurrent.Future
+
+import io.github.facaiy.DAG.DAGNode.LazyFuture
 
 /**
  * Created by facai on 5/5/17.

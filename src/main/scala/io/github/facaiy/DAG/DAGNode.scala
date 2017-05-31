@@ -48,7 +48,8 @@ object DAGNode {
   case class LazyFuture[A](l: LazyCell[Future[A]]) {
     import scala.concurrent.duration._
 
-    def getFuture[A](timeOut: Int): A = Await.result(l.getValue(), timeOut.seconds)
+    def getFuture(timeOut: Int = 10): A =
+      Await.result(l.getValue(), timeOut.seconds)
   }
 }
 
