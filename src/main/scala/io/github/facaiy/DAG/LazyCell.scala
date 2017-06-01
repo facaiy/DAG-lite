@@ -3,7 +3,7 @@ package io.github.facaiy.DAG
 import scala.concurrent.Future
 import scala.language.implicitConversions
 
-import io.github.facaiy.DAG.DAGNode.LazyFuture
+import io.github.facaiy.DAG.DAGNode.{LazyCellOps, LazyFuture}
 
 /**
  * Created by facai on 5/5/17.
@@ -30,5 +30,7 @@ object LazyCell {
 
   def sequence[A](as: Seq[LazyCell[A]]): LazyCell[Seq[A]] = lazyCell(as.map(_.get()))
 
-  implicit def asLazyFuture[A](l: LazyCell[Future[A]]): LazyFuture[A] = LazyFuture(l)
+  implicit def asLazyFuture[A](lc: LazyCell[Future[A]]): LazyFuture[A] = LazyFuture(lc)
+
+  implicit def asLazyCellOps[A](l: LazyCell[A]): LazyCellOps[A] = LazyCellOps(l)
 }

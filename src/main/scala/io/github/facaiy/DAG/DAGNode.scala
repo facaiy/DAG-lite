@@ -45,11 +45,15 @@ object DAGNode {
     toLazyNetWork(nodes.map(toFutureCell))
   }
 
-  case class LazyFuture[A](l: LazyCell[Future[A]]) {
+  case class LazyFuture[A](lc: LazyCell[Future[A]]) {
     import scala.concurrent.duration._
 
-    def getFuture(timeOut: Int = 10): A =
-      Await.result(l.get(), timeOut.seconds)
+    def getValue(timeOut: Int = 10): A =
+      Await.result(lc.get(), timeOut.seconds)
+  }
+
+  case class LazyCellOps[A](lc: LazyCell[A]) {
+    def getValue(): A = lc.get()
   }
 }
 
