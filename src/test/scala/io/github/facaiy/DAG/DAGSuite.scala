@@ -83,9 +83,9 @@ class DAGSuite extends FunSpec {
       val nodes = Seq(InputNode("input", () => System.currentTimeMillis()))
       val fm = DAGNode.toFutureNetWork(nodes)
 
-      val before = fm("input").getFuture()
+      val before = fm("input").getValue()
       Thread.sleep(1)
-      val after = fm("input").getFuture()
+      val after = fm("input").getValue()
 
       assert(before === after)
     }
@@ -121,7 +121,7 @@ class DAGSuite extends FunSpec {
       val fm = DAGNode.toFutureNetWork(nodes)
 
       assert(
-        fm("process1").getFuture()
+        fm("process1").getValue()
           .sortBy(_.start)
           .sliding(2)
           .exists(x => x(1).start < x(0).end))
