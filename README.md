@@ -73,6 +73,6 @@ features:
       */
 
      // run if needed
-     fm("output1").getFuture()
-     fm("output2").getFuture()
+     fm("output1").getValue()
+     fm("output2").getValue()
    ```
