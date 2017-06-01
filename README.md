@@ -40,7 +40,7 @@ features:
      val inputNode2 = InputNode("input2", read)
      // ProcessNode(uid, dependencyUids, function)
      val internalNode1 = ProcessNode("process1", "input1", process1)
-     val internalNode2 = ProcessNode("process2", Seq("input1", "input2") process2)
+     val internalNode2 = ProcessNode("process2", Seq("input1", "input2"), process2)
      // OutputNode(uid, dependencyUids, function)
      val outputNode1 = OutputNode("output1", "process1", write1)
      val outputNode2 = OutputNode("output2", Seq("process1", "process2"), write2)
