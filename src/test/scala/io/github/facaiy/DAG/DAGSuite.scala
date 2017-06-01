@@ -1,6 +1,8 @@
 package io.github.facaiy.DAG
 
-import java.util.concurrent.ConcurrentHashMap
+import java.util.concurrent.{ConcurrentHashMap, Executors}
+
+import scala.concurrent.ExecutionContext
 
 import org.scalatest.FunSpec
 
@@ -76,6 +78,8 @@ class DAGSuite extends FunSpec {
 
   describe("For lazy and concurrent network") {
     it("nodes are only be evaluated once.") {
+      import scala.concurrent.ExecutionContext.Implicits.global
+
       val nodes = Seq(InputNode("input", () => System.currentTimeMillis()))
       val fm = DAGNode.toFutureNetWork(nodes)
 
@@ -87,6 +91,8 @@ class DAGSuite extends FunSpec {
     }
 
     it("nodes run in parallel.") {
+      implicit val ec = ExecutionContext.fromExecutor(Executors.newFixedThreadPool(2))
+
       case class TimeRecord(id: String, start: Long, end: Long)
 
       /* ------- helper method --------- */
