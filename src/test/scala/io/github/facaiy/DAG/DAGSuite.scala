@@ -58,7 +58,7 @@ class DAGSuite extends FunSpec {
       val lm: Map[String, LazyCell[Int]] = DAGNode.toLazyNetWork(nodes)
       assert(lm.size === 7)
 
-      lm("o1").getValue()
+      lm("o1").get()
       assert(records.values().toArray().forall(_ === 1))
       assert(records.size === 4)
       assert(records.containsKey("p2"))
@@ -66,12 +66,12 @@ class DAGSuite extends FunSpec {
       assert(records.containsKey("i2"))
       assert(records.containsKey("i3"))
 
-      lm("o2").getValue()
+      lm("o2").get()
       assert(records.values().toArray().forall(_ === 1))
       assert(records.size === lm.size)
 
-      assert(lm("p1").getValue() === 2)
-      assert(lm("p2").getValue() === 5)
+      assert(lm("p1").get() === 2)
+      assert(lm("p2").get() === 5)
       assert(records.values().toArray().forall(_ === 1))
     }
   }

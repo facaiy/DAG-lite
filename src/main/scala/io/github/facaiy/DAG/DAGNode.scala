@@ -25,7 +25,7 @@ object DAGNode {
           }
       }
 
-    nodesMap.getValue()
+    nodesMap.get()
   }
 
   def toFutureNetWork[K, V](nodes: Seq[DAGNode[K, V]])
@@ -49,7 +49,7 @@ object DAGNode {
     import scala.concurrent.duration._
 
     def getFuture(timeOut: Int = 10): A =
-      Await.result(l.getValue(), timeOut.seconds)
+      Await.result(l.get(), timeOut.seconds)
   }
 }
 
