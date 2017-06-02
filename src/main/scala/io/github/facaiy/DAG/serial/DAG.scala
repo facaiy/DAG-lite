@@ -10,7 +10,7 @@ import io.github.facaiy.DAG.core.LazyCell._
 object DAG extends ParentDAG {
   import scala.language.implicitConversions
 
-  implicit def asNodesOps[K, V](nodes: Seq[DAGNode[K, V]]): Nodes[K, V] = Nodes(nodes)
+  implicit def asNodes[K, V](nodes: Seq[DAGNode[K, V]]): Nodes[K, V] = Nodes(nodes)
 
   implicit def asLazyCellOps[A](l: LazyCell[A]): LazyCellOps[A] = LazyCellOps(l)
 

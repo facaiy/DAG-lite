@@ -13,7 +13,7 @@ object DAG extends ParentDAG {
   import scala.language.implicitConversions
 
   // TODO(facai), duplication of serial.DAG.asNodesOps
-  implicit def asNodesOps[K, V](nodes: Seq[DAGNode[K, V]]): Nodes[K, V] = Nodes(nodes)
+  implicit def asNodes[K, V](nodes: Seq[DAGNode[K, V]]): Nodes[K, V] = Nodes(nodes)
 
   implicit def asFutureCell[K, V](nodes: Seq[DAGNode[K, V]]): FutureCell[K, V] = FutureCell(nodes)
 
