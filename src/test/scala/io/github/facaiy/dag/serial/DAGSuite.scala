@@ -1,9 +1,9 @@
-package io.github.facaiy.DAG.serial
+package io.github.facaiy.dag.serial
 
 import java.util.concurrent.ConcurrentHashMap
 
-import io.github.facaiy.DAG.core.{InputNode, LazyCell, OutputNode, ProcessNode}
-import io.github.facaiy.DAG.serial.Implicits._
+import io.github.facaiy.dag.core.{InputNode, LazyCell, OutputNode, ProcessNode}
+import io.github.facaiy.dag.serial.Implicits._
 import org.scalatest.FunSpec
 
 /**

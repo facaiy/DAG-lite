@@ -1,11 +1,11 @@
-package io.github.facaiy.DAG.parallel
+package io.github.facaiy.dag.parallel
 
 import java.util.concurrent.Executors
 
 import scala.concurrent.ExecutionContext
 
-import io.github.facaiy.DAG.core.{InputNode, InternalNode}
-import io.github.facaiy.DAG.parallel.Implicits._
+import io.github.facaiy.dag.core.{InputNode, InternalNode}
+import io.github.facaiy.dag.parallel.Implicits._
 import org.scalatest.FunSpec
 
 /**

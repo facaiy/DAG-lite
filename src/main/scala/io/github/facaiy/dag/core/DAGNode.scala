@@ -1,8 +1,8 @@
-package io.github.facaiy.DAG.core
+package io.github.facaiy.dag.core
 
 import scala.concurrent.{Await, ExecutionContext, Future}
 
-import io.github.facaiy.DAG.core.LazyCell.{lazyCell, sequence}
+import io.github.facaiy.dag.core.LazyCell.{lazyCell, sequence}
 
 /**
  * Created by facai on 5/10/17.
@@ -14,9 +14,9 @@ sealed trait DAGNode[K, V] {
 case class InputNode[K, V](override val name: K,
                            transFunc: () => V) extends DAGNode[K, V]
 
-private[DAG] case class InternalNode[K, V](override val name: K,
-                                      depends: Seq[K],
-                                      reduceFunc: Seq[V] => V) extends DAGNode[K, V]
+private[dag] case class InternalNode[K, V](override val name: K,
+                                           depends: Seq[K],
+                                           reduceFunc: Seq[V] => V) extends DAGNode[K, V]
 
 object ProcessNode {
   def apply[K, V](name: K, depends: Seq[K], reduceFunc: Seq[V] => V): DAGNode[K, V] =

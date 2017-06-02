@@ -1,4 +1,4 @@
-package io.github.facaiy.DAG.core
+package io.github.facaiy.dag.core
 
 /**
  * Created by facai on 5/5/17.
