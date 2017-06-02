@@ -7,29 +7,33 @@ import io.github.facaiy.dag.core.{DAGNode, InputNode, InternalNode, LazyCell}
 /**
  * Created by facai on 6/2/17.
  */
-object Implicits {
+object Implicits { self =>
   import scala.language.implicitConversions
+
+  def toParallel[K, V](nodes: Seq[DAGNode[K, V]])
+                      (implicit executor: ExecutionContext): Seq[DAGNode[K, Future[V]]] = {
+
+    def toFutureCell(n: DAGNode[K, V]): DAGNode[K, Future[V]] =
+      n match {
+        case InputNode(k, f) =>
+          // TODO(facai), use `compose` to combine `f` and `Future.apply`
+          val g = () => Future(f())(executor)
+          InputNode(k, g)
+        case InternalNode(k, ds, f) =>
+          val g = (xs: Seq[Future[V]]) => Future.sequence(xs)(implicitly, executor).map(f)
+          InternalNode(k, ds, g)
+      }
+
+    nodes.map(toFutureCell)
+  }
 
   implicit def asFutureCell[K, V](nodes: Seq[DAGNode[K, V]]): FutureCell[K, V] = FutureCell(nodes)
 
   implicit def asLazyFuture[A](lc: LazyCell[Future[A]]): LazyFuture[A] = LazyFuture(lc)
 
   case class FutureCell[K, V](nodes: Seq[DAGNode[K, V]]) {
-    def toParallel(implicit executor: ExecutionContext): Seq[DAGNode[K, Future[V]]] = {
-
-      def toFutureCell(n: DAGNode[K, V]): DAGNode[K, Future[V]] =
-        n match {
-          case InputNode(k, f) =>
-            // TODO(facai), use `compose` to combine `f` and `Future.apply`
-            val g = () => Future(f())(executor)
-            InputNode(k, g)
-          case InternalNode(k, ds, f) =>
-            val g = (xs: Seq[Future[V]]) => Future.sequence(xs)(implicitly, executor).map(f)
-            InternalNode(k, ds, g)
-        }
-
-      nodes.map(toFutureCell)
-    }
+    def toParallel(implicit executor: ExecutionContext): Seq[DAGNode[K, Future[V]]] =
+      self.toParallel(nodes)(executor)
   }
 
   case class LazyFuture[A](lc: LazyCell[Future[A]]) {
