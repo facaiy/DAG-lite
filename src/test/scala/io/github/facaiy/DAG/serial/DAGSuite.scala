@@ -3,7 +3,7 @@ package io.github.facaiy.DAG.serial
 import java.util.concurrent.ConcurrentHashMap
 
 import io.github.facaiy.DAG.core.{InputNode, LazyCell, OutputNode, ProcessNode}
-import io.github.facaiy.DAG.serial.DAG._
+import io.github.facaiy.DAG.serial.Implicits._
 import org.scalatest.FunSpec
 
 /**

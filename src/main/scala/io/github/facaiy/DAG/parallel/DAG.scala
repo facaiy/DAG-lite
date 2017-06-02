@@ -10,15 +10,6 @@ import io.github.facaiy.DAG.serial.DAG.Nodes
  * Created by facai on 6/2/17.
  */
 object DAG extends ParentDAG {
-  import scala.language.implicitConversions
-
-  // TODO(facai), duplication of serial.DAG.asNodesOps
-  implicit def asNodes[K, V](nodes: Seq[DAGNode[K, V]]): Nodes[K, V] = Nodes(nodes)
-
-  implicit def asFutureCell[K, V](nodes: Seq[DAGNode[K, V]]): FutureCell[K, V] = FutureCell(nodes)
-
-  implicit def asLazyFuture[A](lc: LazyCell[Future[A]]): LazyFuture[A] = LazyFuture(lc)
-
   case class FutureCell[K, V](nodes: Seq[DAGNode[K, V]]) {
     def toParallel(implicit executor: ExecutionContext): Seq[DAGNode[K, Future[V]]] = {
 
@@ -45,4 +36,17 @@ object DAG extends ParentDAG {
     def getValue(timeOut: Int): A =
       Await.result(lc.get(), timeOut.seconds)
   }
+}
+
+object Implicits {
+  import DAG._
+
+  import scala.language.implicitConversions
+
+  // TODO(facai), duplication of serial.DAG.asNodesOps
+  implicit def asNodes[K, V](nodes: Seq[DAGNode[K, V]]): Nodes[K, V] = Nodes(nodes)
+
+  implicit def asFutureCell[K, V](nodes: Seq[DAGNode[K, V]]): FutureCell[K, V] = FutureCell(nodes)
+
+  implicit def asLazyFuture[A](lc: LazyCell[Future[A]]): LazyFuture[A] = LazyFuture(lc)
 }

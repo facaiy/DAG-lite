@@ -8,12 +8,6 @@ import io.github.facaiy.DAG.core.LazyCell._
  * Created by facai on 6/2/17.
  */
 object DAG extends ParentDAG {
-  import scala.language.implicitConversions
-
-  implicit def asNodes[K, V](nodes: Seq[DAGNode[K, V]]): Nodes[K, V] = Nodes(nodes)
-
-  implicit def asLazyCellOps[A](l: LazyCell[A]): LazyCellOps[A] = LazyCellOps(l)
-
   case class Nodes[K, V](nodes: Seq[DAGNode[K, V]]) {
     def toLazyNetwork: Map[K, LazyCell[V]] = {
       lazy val nodesMap: LazyCell[Map[K, LazyCell[V]]] =
@@ -36,4 +30,14 @@ object DAG extends ParentDAG {
   case class LazyCellOps[A](lc: LazyCell[A]) {
     def getValue: A = lc.get()
   }
+}
+
+object Implicits {
+  import DAG._
+
+  import scala.language.implicitConversions
+
+  implicit def asNodes[K, V](nodes: Seq[DAGNode[K, V]]): Nodes[K, V] = Nodes(nodes)
+
+  implicit def asLazyCellOps[A](l: LazyCell[A]): LazyCellOps[A] = LazyCellOps(l)
 }

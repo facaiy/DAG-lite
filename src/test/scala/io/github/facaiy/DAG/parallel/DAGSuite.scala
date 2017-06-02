@@ -5,7 +5,7 @@ import java.util.concurrent.Executors
 import scala.concurrent.ExecutionContext
 
 import io.github.facaiy.DAG.core.{InputNode, InternalNode}
-import io.github.facaiy.DAG.parallel.DAG._
+import io.github.facaiy.DAG.parallel.Implicits._
 import org.scalatest.FunSpec
 
 /**
