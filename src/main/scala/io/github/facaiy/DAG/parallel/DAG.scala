@@ -1,11 +1,10 @@
 package io.github.facaiy.DAG.parallel
 
-import scala.collection.JavaConverters._
 import scala.concurrent.{Await, ExecutionContext, Future}
 
 import io.github.facaiy.DAG.{DAG => ParentDAG}
 import io.github.facaiy.DAG.core.{DAGNode, InputNode, InternalNode, LazyCell}
-import io.github.facaiy.DAG.serial.{DAG => SerialDAG}
+import io.github.facaiy.DAG.serial.DAG.asNodesOps
 
 /**
  * Created by facai on 6/2/17.
@@ -25,10 +24,14 @@ object DAG extends ParentDAG {
           InternalNode(k, ds, g)
       }
 
-    SerialDAG.toLazyNetWork(nodes.map(toFutureCell))
+    nodes.map(toFutureCell).toLazyNetWork
   }
 
   import scala.language.implicitConversions
+
+  case class FutureCell[K, V](nodes: Seq[DAGNode[K, V]]) {
+  }
+
   implicit def asLazyFuture[A](lc: LazyCell[Future[A]]): LazyFuture[A] = LazyFuture(lc)
 
   case class LazyFuture[A](lc: LazyCell[Future[A]]) {

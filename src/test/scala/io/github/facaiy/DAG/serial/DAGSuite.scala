@@ -55,7 +55,7 @@ class DAGSuite extends FunSpec {
 
       val nodes = Seq(input1, input2, input3, process1, process2, output1, output2)
 
-      val lm: Map[String, LazyCell[Int]] = DAG.toLazyNetWork(nodes)
+      val lm: Map[String, LazyCell[Int]] = nodes.toLazyNetWork
       assert(lm.size === 7)
 
       lm("o1").getValue()
