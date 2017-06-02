@@ -34,6 +34,6 @@ object DAG extends ParentDAG {
   }
 
   case class LazyCellOps[A](lc: LazyCell[A]) {
-    def getValue(): A = lc.get()
+    def getValue: A = lc.get()
   }
 }

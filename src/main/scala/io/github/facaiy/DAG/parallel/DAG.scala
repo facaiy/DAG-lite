@@ -40,7 +40,9 @@ object DAG extends ParentDAG {
   case class LazyFuture[A](lc: LazyCell[Future[A]]) {
     import scala.concurrent.duration._
 
-    def getValue(timeOut: Int = 10): A =
+    def getValue: A = getValue(10)
+
+    def getValue(timeOut: Int): A =
       Await.result(lc.get(), timeOut.seconds)
   }
 }
