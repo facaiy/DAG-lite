@@ -1,6 +1,7 @@
 package io.github.facaiy.dag.parallel
 
 import scala.concurrent.{Await, ExecutionContext, Future}
+import scala.concurrent.duration.Duration
 
 import io.github.facaiy.dag.core.{DAGNode, InputNode, InternalNode, LazyCell}
 
@@ -37,11 +38,9 @@ object Implicits { self =>
   }
 
   case class LazyFuture[A](lc: LazyCell[Future[A]]) {
-    import scala.concurrent.duration._
+    def getValue: A = getValue(Duration.Inf)
 
-    def getValue: A = getValue(10)
-
-    def getValue(timeOut: Int): A =
-      Await.result(lc.get(), timeOut.seconds)
+    def getValue(duration: Duration): A =
+      Await.result(lc.get(), duration)
   }
 }
