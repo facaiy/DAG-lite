@@ -8,7 +8,7 @@ import io.github.facaiy.dag.core.LazyCell
 object Implicits {
   import scala.language.implicitConversions
 
-  implicit def asLazyCellOps[A](l: LazyCell[A]): LazyCellOps[A] = LazyCellOps(l)
+  implicit def asLazyCellOps[A](lc: LazyCell[A]): LazyCellOps[A] = LazyCellOps(lc)
 
   case class LazyCellOps[A](lc: LazyCell[A]) {
     def getValue: A = lc.get()
