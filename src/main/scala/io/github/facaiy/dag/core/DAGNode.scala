@@ -1,9 +1,5 @@
 package io.github.facaiy.dag.core
 
-import scala.concurrent.{Await, ExecutionContext, Future}
-
-import io.github.facaiy.dag.core.LazyCell.{lazyCell, sequence}
-
 /**
  * Created by facai on 5/10/17.
  */
