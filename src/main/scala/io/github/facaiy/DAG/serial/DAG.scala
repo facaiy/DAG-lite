@@ -15,7 +15,7 @@ object DAG extends ParentDAG {
   implicit def asLazyCellOps[A](l: LazyCell[A]): LazyCellOps[A] = LazyCellOps(l)
 
   case class Nodes[K, V](nodes: Seq[DAGNode[K, V]]) {
-    def toLazyNetWork: Map[K, LazyCell[V]] = {
+    def toLazyNetwork: Map[K, LazyCell[V]] = {
       lazy val nodesMap: LazyCell[Map[K, LazyCell[V]]] =
         lazyCell(nodes.map(toLazyCell).toMap)
 
