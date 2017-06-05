@@ -23,6 +23,8 @@ features:
    "io.github.facaiy" %% "DAG-lite" % "0.2.0"
    ```
 
+Note: the 0.2.x release is only tested on scala 2.11.8 *with JDK 8* on Linux and Mac.
+
 
 ### Usage
 
