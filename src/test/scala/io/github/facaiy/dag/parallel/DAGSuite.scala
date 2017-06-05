@@ -17,7 +17,7 @@ class DAGSuite extends FunSpec {
       import scala.concurrent.ExecutionContext.Implicits.global
 
       val nodes = Seq(InputNode("input", () => System.currentTimeMillis()))
-      val fm = nodes.toParallel.toLazyNetwork
+      val fm = nodes.toLazyNetwork
 
       val before = fm("input").getValue
       Thread.sleep(1)
@@ -54,7 +54,7 @@ class DAGSuite extends FunSpec {
         process("process1"))
       val nodes = Seq(input1, input2, input3, process1)
 
-      val fm = nodes.toParallel.toLazyNetwork
+      val fm = nodes.toLazyNetwork
 
       assert(
         fm("process1").getValue

@@ -26,14 +26,22 @@ object Implicits { self =>
     nodes.map(toFutureCell)
   }
 
-  import scala.language.implicitConversions
+  def toLazyNetwork[K, V](nodes: Seq[DAGNode[K, V]])
+                         (implicit executor: ExecutionContext): Map[K, LazyCell[Future[V]]] = {
+    import io.github.facaiy.dag.serial
 
-  implicit class FutureCell[K, V](nodes: Seq[DAGNode[K, V]]) {
-    def toParallel(implicit executor: ExecutionContext): Seq[DAGNode[K, Future[V]]] =
-      self.toParallel(nodes)(executor)
+    serial.Implicits.toLazyNetwork(self.toParallel(nodes))
   }
 
-  implicit class LazyFuture[A](lc: LazyCell[Future[A]]) {
+
+  import scala.language.implicitConversions
+
+  implicit class Nodes[K, V](nodes: Seq[DAGNode[K, V]]) {
+    def toLazyNetwork(implicit executor: ExecutionContext): Map[K, LazyCell[Future[V]]] =
+      self.toLazyNetwork(nodes)(executor)
+  }
+
+  implicit class Result[A](lc: LazyCell[Future[A]]) {
     def getValue: A = getValue(Duration.Inf)
 
     def getValue(duration: Duration): A =
