@@ -39,8 +39,6 @@ class DAGSuite extends FunSpec {
       import java.util.concurrent.Executors
       import scala.concurrent.ExecutionContext
 
-      val executor = ExecutionContext.fromExecutor(Executors.newFixedThreadPool(2))
-
       case class TimeRecord(id: String, start: Long, end: Long)
 
       /* ------- helper method --------- */
@@ -66,6 +64,7 @@ class DAGSuite extends FunSpec {
         process("process1") _)
       val nodes = Seq(input1, input2, input3, process1)
 
+      val executor = ExecutionContext.fromExecutor(Executors.newFixedThreadPool(2))
       val fm = nodes.toLazyNetwork(executor)
 
       assert(
