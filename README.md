@@ -65,7 +65,7 @@ features:
      lm("output2").getValue
    ```
 
-2. Experimental: use `toFutureNetWork` to run nodes in parallel.
+2. Experimental: to run nodes in parallel.
    ```scala
      // build network
      import io.github.facaiy.dag.parallel.Implicits._
