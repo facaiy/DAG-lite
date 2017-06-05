@@ -7,7 +7,7 @@ import io.github.facaiy.dag.core.LazyCell._
  * Created by facai on 6/2/17.
  */
 object Implicits { self =>
-  def toLazyNetwork[K, V](nodes: Seq[DAGNode[K, V]]): Map[K, LazyCell[V]] = {
+  private[dag] def toLazyNetwork[K, V](nodes: Seq[DAGNode[K, V]]): Map[K, LazyCell[V]] = {
     lazy val nodesMap: LazyCell[Map[K, LazyCell[V]]] =
       lazyCell(nodes.map(toLazyCell).toMap)
 

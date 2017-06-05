@@ -1,9 +1,5 @@
 package io.github.facaiy.dag.parallel
 
-import java.util.concurrent.Executors
-
-import scala.concurrent.ExecutionContext
-
 import io.github.facaiy.dag.core.{InputNode, InternalNode}
 import io.github.facaiy.dag.parallel.Implicits._
 import org.scalatest.FunSpec
@@ -14,8 +10,6 @@ import org.scalatest.FunSpec
 class DAGSuite extends FunSpec {
   describe("For lazy and concurrent network") {
     it("nodes are only be evaluated once.") {
-      import scala.concurrent.ExecutionContext.Implicits.global
-
       val nodes = Seq(InputNode("input", () => System.currentTimeMillis()))
       val fm = nodes.toLazyNetwork
 
@@ -27,6 +21,9 @@ class DAGSuite extends FunSpec {
     }
 
     it("nodes run in parallel.") {
+      import java.util.concurrent.Executors
+      import scala.concurrent.ExecutionContext
+
       implicit val ec = ExecutionContext.fromExecutor(Executors.newFixedThreadPool(2))
 
       case class TimeRecord(id: String, start: Long, end: Long)
