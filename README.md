@@ -35,6 +35,8 @@ features:
      def write2[A](as: Seq[A]): Unit
 
      // create nodes
+     import io.github.facaiy.dag.core._
+
      // InputNode(uid, function)
      val inputNode1 = InputNode("input1", read)
      val inputNode2 = InputNode("input2", read)
@@ -48,7 +50,9 @@ features:
      val nodes = Seq(inputNode, internalNode1, internalNode2, outputNode1, outputNode2)
 
      // build network
-     val lm = DAGNode.toLazyNetWork(nodes)
+     import io.github.facaiy.dag.serial.Implicits._
+
+     val lm = nodes.toLazyNetwork
      /**
       * input1 ---> process1 ---> output1
       *         |             |
@@ -57,14 +61,16 @@ features:
       */
 
      // run if needed
-     lm("output1").getValue()
-     lm("output2").getValue()
+     lm("output1").getValue
+     lm("output2").getValue
    ```
 
 2. Experimental: use `toFutureNetWork` to run nodes in parallel.
    ```scala
      // build network
-     val fm = DAGNode.toFutureNetWork(nodes)
+     import io.github.facaiy.dag.parallel.Implicits._
+
+     val pm = nodes.toLazyNetwork
      /**
       * input1 ---> process1 ---> output1
       *         |             |
@@ -73,6 +79,8 @@ features:
       */
 
      // run if needed
-     fm("output1").getValue()
-     fm("output2").getValue()
+     pm("output1").getValue    // wait forever.
+
+     import scala.concurrent.duration._
+     pm("output2").getValue(10 seconds)  // wait 10 seconds.
    ```
