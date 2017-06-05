@@ -9,8 +9,6 @@ import io.github.facaiy.dag.core.{DAGNode, InputNode, InternalNode, LazyCell}
  * Created by facai on 6/2/17.
  */
 object Implicits { self =>
-  import scala.language.implicitConversions
-
   def toParallel[K, V](nodes: Seq[DAGNode[K, V]])
                       (implicit executor: ExecutionContext): Seq[DAGNode[K, Future[V]]] = {
 
@@ -28,16 +26,14 @@ object Implicits { self =>
     nodes.map(toFutureCell)
   }
 
-  implicit def asFutureCell[K, V](nodes: Seq[DAGNode[K, V]]): FutureCell[K, V] = FutureCell(nodes)
+  import scala.language.implicitConversions
 
-  implicit def asLazyFuture[A](lc: LazyCell[Future[A]]): LazyFuture[A] = LazyFuture(lc)
-
-  case class FutureCell[K, V](nodes: Seq[DAGNode[K, V]]) {
+  implicit class FutureCell[K, V](nodes: Seq[DAGNode[K, V]]) {
     def toParallel(implicit executor: ExecutionContext): Seq[DAGNode[K, Future[V]]] =
       self.toParallel(nodes)(executor)
   }
 
-  case class LazyFuture[A](lc: LazyCell[Future[A]]) {
+  implicit class LazyFuture[A](lc: LazyCell[Future[A]]) {
     def getValue: A = getValue(Duration.Inf)
 
     def getValue(duration: Duration): A =

@@ -24,11 +24,9 @@ package object dag { self =>
     nodesMap.get()
   }
 
-  case class Nodes[K, V](nodes: Seq[DAGNode[K, V]]) {
-    def toLazyNetwork: Map[K, LazyCell[V]] = self.toLazyNetwork(nodes)
-  }
-
   import scala.language.implicitConversions
 
-  implicit def asNodes[K, V](nodes: Seq[DAGNode[K, V]]): Nodes[K, V] = Nodes(nodes)
+  implicit class Nodes[K, V](nodes: Seq[DAGNode[K, V]]) {
+    def toLazyNetwork: Map[K, LazyCell[V]] = self.toLazyNetwork(nodes)
+  }
 }
