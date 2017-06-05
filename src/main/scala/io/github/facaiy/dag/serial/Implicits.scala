@@ -1,7 +1,10 @@
 package io.github.facaiy.dag.serial
 
+import scala.concurrent.duration.Duration
+
 import io.github.facaiy.dag.core.{DAGNode, InputNode, InternalNode, LazyCell}
 import io.github.facaiy.dag.core.LazyCell._
+import io.github.facaiy.dag.Result
 
 /**
  * Created by facai on 6/2/17.
@@ -30,7 +33,10 @@ object Implicits { self =>
     def toLazyNetwork: Map[K, LazyCell[V]] = self.toLazyNetwork(nodes)
   }
 
-  implicit class Result[A](lc: LazyCell[A]) {
+  implicit class SerResult[A](lc: LazyCell[A]) extends Result[A] {
     def getValue: A = lc.get()
+
+    @deprecated("Invalid argument, use `getValue` instead.")
+    def getValue(duration: Duration): A = getValue
   }
 }

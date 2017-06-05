@@ -4,6 +4,7 @@ import scala.concurrent.{Await, ExecutionContext, Future}
 import scala.concurrent.duration.Duration
 
 import io.github.facaiy.dag.core.{DAGNode, InputNode, InternalNode, LazyCell}
+import io.github.facaiy.dag.Result
 
 /**
  * Created by facai on 6/2/17.
@@ -47,7 +48,7 @@ object Implicits { self =>
 
   }
 
-  implicit class Result[A](lc: LazyCell[Future[A]]) {
+  implicit class ParResult[A](lc: LazyCell[Future[A]]) extends Result[A] {
     def getValue: A = getValue(Duration.Inf)
 
     def getValue(duration: Duration): A =
