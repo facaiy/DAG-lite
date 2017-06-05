@@ -36,7 +36,7 @@ object Implicits { self =>
   implicit class SerResult[A](lc: LazyCell[A]) extends Result[A] {
     def getValue: A = lc.get()
 
-    @deprecated("Invalid argument, use `getValue` instead.")
+    @deprecated("Invalid argument, use `getValue` instead.", "0.2.0")
     def getValue(duration: Duration): A = getValue
   }
 }
