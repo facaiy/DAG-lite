@@ -3,7 +3,7 @@
 
     <groupId>io.github.facaiy</groupId>
     <artifactId>DAG-lite</artifactId>
-    <version>0.2.0</version>
+    <version>0.2.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>${project.groupId}:${project.artifactId}</name>
@@ -30,7 +30,7 @@
         <connection>scm:git:git@github.com:facaiy/DAG-lite.git</connection>
         <developerConnection>scm:git:git@github.com:facaiy/DAG-lite.git</developerConnection>
         <url>http://github.com/facaiy/DAG-lite/tree/master</url>
-      <tag>DAG-lite-0.2.0</tag>
+      <tag>HEAD</tag>
   </scm>
 
     <properties>
