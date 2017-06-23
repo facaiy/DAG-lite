@@ -1,4 +1,7 @@
 # DAG-lite
+[<img src="https://img.shields.io/travis/facaiy/DAG-lite.svg"/>](https://travis-ci.org/facaiy/DAG-lite)
+[<img src="https://img.shields.io/maven-central/v/io.github.facaiy/DAG-lite.svg">](http://search.maven.org/#search|ga|1|g:"io.github.facaiy"%20AND%20a:"DAG-lite")
+
 An experimental DAG library with functional programming technology.
 
 features:
